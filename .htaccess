@@ -1,0 +1,42 @@
+Options -MultiViews
+DirectoryIndex index.html
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule ^oferta/fotografia-przedszkolna-i-szkolna/?$ https://malowanekadry.pl/oferta/fotografia-przedszkolna [R=301,L]
+
+  # Jeden adres strony: https://malowanekadry.pl (bez www, bez http)
+  RewriteCond %{HTTPS} off [OR]
+  RewriteCond %{HTTP_HOST} ^www\. [NC]
+  RewriteRule ^(.*)$ https://malowanekadry.pl/$1 [R=301,L]
+
+  # Stare adresy z poprzedniej strony -> nowe podstrony
+  RewriteRule ^foto/chrzest /oferta [NC,R=301,L]
+  RewriteRule ^foto/komunia /oferta/komunie-grupowe [NC,R=301,L]
+  RewriteRule ^foto/zdjecia-(w-studiu|studio) /oferta/fotografia-studyjna [NC,R=301,L]
+  RewriteRule ^foto(/.*)?$ /portfolio [R=301,L]
+  RewriteRule ^zdjecia-produkt /portfolio [R=301,L]
+
+
+  # /kontakt -> /kontakt/index.html
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME}/index.html -f
+  RewriteRule ^(.*)$ /$1/index.html [L]
+</IfModule>
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json image/svg+xml
+</IfModule>
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType text/html "access plus 1 hour"
+</IfModule>
+
+AddDefaultCharset UTF-8
+ErrorDocument 404 /index.html
