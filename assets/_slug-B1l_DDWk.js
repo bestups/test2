@@ -1,0 +1,1 @@
+import{t as e}from"./jsx-runtime-Cltr0gcK.js";import{n as t,r as n,t as r}from"./index-BRvE7doA.js";var i=e();function a(){let{slug:e}=r.useLoaderData(),a=n.find(t=>t.slug===e);return(0,i.jsx)(t,{service:a})}export{a as component};
